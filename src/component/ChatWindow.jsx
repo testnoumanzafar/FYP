@@ -168,7 +168,7 @@ const handleCopy = async (value) => {
 
   return (
     <div className="flex flex-col h-full">
-      <ChatHeader name={user}  userId={userId}/>
+      <ChatHeader userId={userId} isGroupChat={false} />
        
       <div className="flex-1 overflow-y-auto p-4">
     {messages.map((m, i) => {
@@ -234,7 +234,7 @@ const handleCopy = async (value) => {
   <div className="mt-2">
     <a
       href={m.file}
-      target="_blank"
+      // target="_blank"
       rel="noopener noreferrer"
       className="text-blue-600 underline text-sm"
     >

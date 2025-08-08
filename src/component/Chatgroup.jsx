@@ -119,7 +119,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import socket, { URL } from '../constant/utils';
 import axios from 'axios';
-import { FaMicrophone, FaPaperclip, FaPaperPlane, FaSmile } from 'react-icons/fa';
+import { FaDownload, FaMicrophone, FaPaperclip, FaPaperPlane, FaRegCopy, FaSmile } from 'react-icons/fa';
 import EmojiPicker from 'emoji-picker-react';
 import ChatHeader from './ChatHeader';
 import { format, isToday, isYesterday } from "date-fns";
@@ -265,9 +265,20 @@ setVoiceBlob(null);
 let lastDate = null;
 
 
+const handleCopy = async (value) => {
+  try {
+    await navigator.clipboard.writeText(value);
+    alert('Copied!');
+  } catch (err) {
+    console.error('Failed to copy:', err);
+  }
+};
+
+
+
   return (
     <div className="flex flex-col h-full">
-      <ChatHeader name={`Group Chat`} />
+      <ChatHeader groupId={groupId} isGroupChat={true} />
 
       {/* Messages */}
       {/* <div className="flex-1 overflow-y-auto p-4">
@@ -319,15 +330,59 @@ let lastDate = null;
                   : 'bg-gray-200 text-black'
               }`}
             >
-              {m.text && <p>{m.text}</p>}
+              {/* {m.text && <p>{m.text}</p>} */}
 
-              {m.fileUrl && (
+              {m.text && (
+                <div className="flex items-center space-x-1">
+                  <span>{m.text}</span>
+                  <button
+                    onClick={() => handleCopy(m.text)}
+                    className="ml-1 text-white text-xs hover:text-yellow-300"
+                    title="Copy text"
+                  >
+                    <FaRegCopy />
+                  </button>
+                </div>
+              )}
+
+              {/* {m.fileUrl && (
                 <img
                   src={m.fileUrl}
                   alt="attachment"
                   className="rounded mt-2 max-w-[300px]"
                 />
-              )}
+              )} */}
+              {m.fileUrl && m.fileUrl.match(/\.(jpe?g|png|gif|bmp|svg)$/i) && (
+  <div className="mt-2 relative group">
+    <img src={m.fileUrl} alt="sent media" className="rounded-md max-w-[200px]" />
+
+    {/* Download button */}
+    <a
+      href={m.fileUrl}
+      download
+      className="absolute bottom-1 left-1 bg-white rounded-full p-1 shadow-md group-hover:block"
+      title="Download image"
+    >
+      <FaDownload />
+    </a>
+
+ 
+  </div>
+)}
+
+
+{m.fileUrl && !m.fileUrl.endsWith('.webm') && !m.fileUrl.match(/\.(jpe?g|png|gif|bmp|svg)$/i) && (
+  <div className="mt-2">
+    <a
+      href={m.fileUrl}
+      // target="_blank"
+      rel="noopener noreferrer"
+      className="text-blue-600 underline text-sm"
+    >
+      <FaDownload /> Download {m.fileUrl.split('/').pop()}
+    </a>
+  </div>
+)}
 
               {m.voiceUrl && (
                 <div className="mt-2">

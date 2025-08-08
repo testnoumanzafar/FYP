@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { useUsers } from "../context/UserContext";
 import { FiPlus } from "react-icons/fi";
 import GroupPopup from "./GroupPopup";
+import DeleteGroupIcon from "./DeleteGroupIcon";
+import DeleteUserIcon from "./DeleteUserIcon";
  
 
 const Chatlist = ({ mode, onUserSelect , onGroupSelect}) => {
@@ -218,12 +220,16 @@ console.log(filteredUsers,"filter");
                 />
               
               </div>
-              <div>
-                {/* <div className={`text-sm ${isOnline ? 'text-green-500' : 'text-gray-400'}`}>
-          {isOnline ? 'h-10 w-10 rounded-full ' : 'Offline'}
-        </div> */}
+              <div className="flex justify-between items-center w-full">
+                
                 <div className="font-medium">{user.name}</div>
-
+<DeleteGroupIcon
+      groupId={user._id}
+      groupName={user.name}
+      onDelete={(deletedId) =>
+        setUsersGroup((prev) => prev.filter((g) => g._id !== deletedId))
+      }
+    />
               </div>
             </div>
           </li>
@@ -278,9 +284,10 @@ console.log(filteredUsers,"filter");
               <span className="absolute bottom-0 right-0 w-4 h-4 bg-green-500 border-2 border-white rounded-full" />
             )}
           </div>
-          <div>
+          <div className="flex justify-between items-center w-full">
             <div className="font-medium">{user.name}</div>
              
+           <DeleteUserIcon userId={user._id} userName={user.name} />
           </div>
         </div>
       </li>

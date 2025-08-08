@@ -2,21 +2,30 @@
 import Chatlist from '../component/Chatlist'
 import ChatWindow from '../component/ChatWindow'
 import Sidebar from "../component/Siderbar"
- 
 import ShowDefault from '../component/ShowDefault'
+import VideoCallModal from '../component/VideoCallModal'
 
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Chatgroup from '../component/Chatgroup';
 import socket from '../constant/utils';
+import { useVideoCall } from '../context/VideoCallContext';
 
 const ChatMain = () => {
-  // const { id } = useParams(); // id from URL like /chat/abc123
   const navigate = useNavigate();
+  const { 
+    isCallModalOpen, 
+    currentCall, 
+    incomingCall, 
+    endCall, 
+    acceptCall, 
+    rejectCall 
+  } = useVideoCall();
+  
   const [selectedUser, setSelectedUser] = useState(null);
   const [selectedGroup, setSelectedGroup] = useState(null);
-const [mode, setMode] = useState("dm");
-console.log(mode, "chatmain")
+  const [mode, setMode] = useState("dm");
+  console.log(mode, "chatmain")
 
 
 //  now 7/27/2025 
@@ -24,7 +33,10 @@ console.log(mode, "chatmain")
 useEffect(() => {
   const userId = localStorage.getItem("Cuserid"); // you already store it
   if (userId) {
+    console.log('🚀 Frontend sending userOnline event for userId:', userId);
     socket.emit("userOnline", userId);
+  } else {
+    console.log('❌ No userId found in localStorage');
   }
 }, []);
 
@@ -82,6 +94,18 @@ const handleGroupSelect = (group) => {
 
 
       </div>
+
+      {/* Video Call Modal */}
+      {isCallModalOpen && (
+        <VideoCallModal
+          isOpen={isCallModalOpen}
+          onClose={endCall}
+          roomName={currentCall?.roomName || incomingCall?.roomName}
+          userName={localStorage.getItem("Cusername")}
+          isIncoming={!!incomingCall}
+          callerName={incomingCall?.callerName}
+        />
+      )}
     </div>
   );
 };
