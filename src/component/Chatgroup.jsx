@@ -164,13 +164,12 @@ useEffect(() => {
 
   // 3. Handle incoming messages
   const handleReceiveMessage = (msg) => {
-    // if (msg.group === groupId) {
-    //   setMessages((prev) => [...prev, msg]);
-    // }
-    if (msg.group === groupId && msg.sender._id !== senderId) {
-  setMessages((prev) => [...prev, msg]);
-}
-
+    console.log('Received group message:', msg);
+    // Handle the message if it's for this group and not from the current user
+    if (msg.groupId === groupId && msg.sender._id !== senderId) {
+      console.log('Adding message to state:', msg);
+      setMessages((prev) => [...prev, msg]);
+    }
   };
 
   socket.on('receiveGroupMessage', handleReceiveMessage);
@@ -236,19 +235,25 @@ useEffect(() => {
     if (voiceBlob) formData.append('voice', voiceBlob);
 
     try {
- 
-const res = await axios.post(`${URL}/api/groups/message`, formData, {
-  headers: { 'Content-Type': 'multipart/form-data' },
-});
-socket.emit('sendGroupMessage', res.data);
+      // Send to server
+      const res = await axios.post(`${URL}/api/groups/message`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
 
- 
-setMessages((prev) => [...prev, res.data]);
+      // Make sure we have the right structure for the socket event
+      const messageData = {
+        ...res.data,
+        groupId: groupId  // Ensure groupId is included
+      };
 
- 
-setInputText('');
-setFile(null);
-setVoiceBlob(null);
+      // Emit the socket event with the complete data
+      socket.emit('sendGroupMessage', messageData);
+      
+      // Update local state
+      setMessages((prev) => [...prev, res.data]);
+      setInputText('');
+      setFile(null);
+      setVoiceBlob(null);
 
     } catch (err) {
       console.error('Group message send failed:', err);
