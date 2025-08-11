@@ -1,4 +1,3 @@
-// src/components/DeleteUserIcon.jsx
 
 import React, { useState, useRef, useEffect } from "react";
 import { FiMoreVertical, FiTrash } from "react-icons/fi";

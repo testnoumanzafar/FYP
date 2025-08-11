@@ -1,16 +1,13 @@
-// components/DeleteGroupIcon.jsx
 import React, { useEffect, useRef, useState } from "react";
 import { FiMoreVertical, FiTrash2 } from "react-icons/fi";
 import axios from "axios";
 import { URL } from "../constant/utils";
-// import { URL } from "../constant/utils";
 
 const DeleteGroupIcon = ({ groupId, groupName, onDelete }) => {
   const senderEmail = localStorage.getItem("Cuseremail");
   const senderId = localStorage.getItem("Cuserid");
  const menuRef = useRef();
 
-  // Hide dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (menuRef.current && !menuRef.current.contains(e.target)) {

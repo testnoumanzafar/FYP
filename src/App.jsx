@@ -6,6 +6,7 @@ import { Toaster } from 'react-hot-toast'
 import Login from './component/Login'
 import ChatMain from './page/ChatMain'
 import Chatgroup from './component/Chatgroup'
+import PrivateRoute from './component/PrivateRoute'
 
 function App() {
 
@@ -15,9 +16,27 @@ function App() {
       <Routes>
         <Route path="/" element={<Signup />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/chat" element={<ChatMain />} />
-        <Route path="/chat/:id" element={<ChatMain />} />
-        {/* <Route path="/group/:id" element={<Chatgroup />} /> */}
+
+<Route
+            path="/chat"
+            element={
+              <PrivateRoute>
+                <ChatMain />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/chat/:id"
+            element={
+              <PrivateRoute>
+                <ChatMain />
+              </PrivateRoute>
+            }
+          />
+
+        {/* <Route path="/chat" element={<ChatMain />} />
+        <Route path="/chat/:id" element={<ChatMain />} /> */}
+        
       </Routes>
     </BrowserRouter>
    

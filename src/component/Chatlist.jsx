@@ -25,7 +25,7 @@ const Chatlist = ({ mode, onUserSelect, onGroupSelect }) => {
  const [showPopup, setShowPopup] = useState(false);
   //  for group chat 
 //  const senderId = localStorage.getItem("Cuserid");
-  const senderEmail = localStorage.getItem("Cuseremail"); // get the email from localStorage
+  const senderEmail = localStorage.getItem("Cuseremail");  
   const isAdmin = senderEmail === "nouman@gmail.com"; 
 
 
@@ -127,9 +127,6 @@ const Chatlist = ({ mode, onUserSelect, onGroupSelect }) => {
     };
 }, []);
 
- 
-
- 
 
 
   const filteredUsers = users.filter((user) =>
@@ -137,12 +134,6 @@ const Chatlist = ({ mode, onUserSelect, onGroupSelect }) => {
   // const isOnline = onlineStatus[user._id] === "online";
   );
 console.log(filteredUsers,"filter");
-
- 
-
- 
-
-  
 
 
   // Handler to clear notification when user/group is opened
