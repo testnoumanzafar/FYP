@@ -3,11 +3,10 @@ import signinImg from '../assets/signin-image.png';
 import { IoIosPerson } from 'react-icons/io';
 import { RiLockPasswordFill } from 'react-icons/ri';
 import axios from 'axios';
-// import { URL } from '../../const/utils';
+ 
 import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
-// import { useDispatch } from 'react-redux';
-// import { setUser } from '../reduxtolkit/slice/userinfo';
+ 
 import { URL } from '../constant/utils';
 const Login = () => {
   // const dispatch = useDispatch()
@@ -28,9 +27,7 @@ const Login = () => {
   const handleSubmit =async (e) => {
     e.preventDefault();
      localStorage.setItem("Cuseremail", formData.email);
-    // const SendData = new FormData()
-    // SendData.append("email",formData.email)
-    // SendData.append("password",formData.password)  this data is not send json form 
+   
     try {
       const res =await axios.post(`${URL}/user/login`,{
         email: formData.email,
@@ -63,11 +60,11 @@ const Login = () => {
           />
         </div>
 
-        {/* Form Section */}
+      
         <div className="flex-1">
           <h2 className="text-3xl font-bold mb-6">Sign In</h2>
           <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Name */}
+          
             <div className="relative">
               <input
                 type="email"
@@ -82,7 +79,7 @@ const Login = () => {
               </span>
             </div>
 
-            {/* Password */}
+           
             <div className="relative">
               <input
                 type="password"
@@ -97,7 +94,7 @@ const Login = () => {
               </span>
             </div>
 
-            {/* Submit Button */}
+         
             <button
               type="submit"
               className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 mt-3 px-6 cursor-pointer rounded"

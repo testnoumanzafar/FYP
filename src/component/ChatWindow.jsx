@@ -15,8 +15,8 @@ const ChatWindow = ({ userId, user }) => {
   
   const inputRef = useRef(null);
   const [messages, setMessages] = useState([]);
-  console.log(messages, "messages DAtABASE");
-  
+  // console.log(messages, "messages DAtABASE");
+  const bottomRef = useRef(null);
   const [inputText, setInputText] = useState('');
   const [file, setFile] = useState('');
     
@@ -29,7 +29,6 @@ const [stream, setStream] = useState(null);
 
 
   const senderId = localStorage.getItem('Cuserid');
-  // const receiverId = localStorage.getItem('recevierID');
 // voice start
 const [mediaRecorder, setMediaRecorder] = useState(null);
 const [audioChunks, setAudioChunks] = useState([]);
@@ -62,6 +61,9 @@ const toggleRecording = async () => {
 };
 
 
+useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
 
   // voice END
 const  receiverId= userId
@@ -164,6 +166,7 @@ const handleCopy = async (value) => {
     alert('Copy failed');
   }
 };
+
 
 
   return (
@@ -282,6 +285,7 @@ const handleCopy = async (value) => {
         </div>
       );
     })}
+      <div ref={bottomRef} className="h-0"></div>
   </div>
 
       <div className="flex items-center p-3 border-t border-gray-200 bg-white relative">
@@ -312,28 +316,6 @@ const handleCopy = async (value) => {
     
 
 <div className="relative flex-1 mx-2">
-
-{/* {file && (
-    <div className="absolute -top-14 -left-5 z-10 bg-white bg-opacity-90 p-1 rounded shadow flex items-center  max-w-[80%]">
-      {file.type.startsWith("image/") ? (
-        <img
-          src={window.URL.createObjectURL(file)}
-          alt="preview"
-          className="w-14 h-14 object-cover rounded"
-        />
-      ) : (
-        <div className="text-sm text-gray-700 truncate max-w-[120px]">{file.name}</div>
-      )}
-      <button
-        onClick={() => setFile(null)}
-        className="text-red-500 -mt-10 -ml-2 hover:text-red-700 text-sm cursor-pointer"
-        title="Remove file"
-      >
-        ✖
-      </button>
-    </div>
-  )} */}
-
 
   <div className="flex items-center space-x-2">
  {file && (
