@@ -1,8 +1,8 @@
 //   const URL= http://localhost:4000
-export   const   URL="http://localhost:4000"
+export   const   URL="https://backend-fyp-1.onrender.com"
 
 import { io } from "socket.io-client";
-const socket = io("http://localhost:4000"); // Your backend port
+const socket = io("https://backend-fyp-1.onrender.com"); // Your backend port
 export default socket;
 
 
