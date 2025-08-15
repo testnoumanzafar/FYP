@@ -3,11 +3,12 @@ import signupimg from '../assets/signup-image.png';
 import { IoIosPerson,   } from "react-icons/io";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { MdEmail } from "react-icons/md";
-import { URL } from '../../const/utils';
+// import { URL } from '../../const/utils';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
 import ChatMain from '../page/ChatMain';
+import { URL } from '../constant/utils';
 const Signup = () => {
   const navigate = useNavigate()
   const [show, setShow]= useState([])
