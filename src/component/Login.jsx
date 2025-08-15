@@ -37,6 +37,7 @@ const Login = () => {
       // dispatch(setUser(res.data.user))
       localStorage.setItem('Cusertoken',res.data.token)
       localStorage.setItem("Cuserid",res.data.user._id)
+      localStorage.setItem("nameOw", res.data.user.name);
   toast.success(res.data.message)  
   if(res.status ===200){
     navigate('/chat')

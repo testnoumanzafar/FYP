@@ -7,42 +7,43 @@ import Login from './component/Login'
 import ChatMain from './page/ChatMain'
 import Chatgroup from './component/Chatgroup'
 import PrivateRoute from './component/PrivateRoute'
+import GlobalVideoCallNotification from './component/GlobalVideoCallNotification'
+import { VideoCallProvider } from './context/VideoCallContext'
+// import { VideoCallProvider } from './context/VideoCallContext'
 
 function App() {
-
   return (
     <>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Signup />} />
-        <Route path="/login" element={<Login />} />
+      <VideoCallProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
 
-<Route
-            path="/chat"
-            element={
-              <PrivateRoute>
-                <ChatMain />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/chat/:id"
-            element={
-              <PrivateRoute>
-                <ChatMain />
-              </PrivateRoute>
-            }
-          />
-
-        {/* <Route path="/chat" element={<ChatMain />} />
-        <Route path="/chat/:id" element={<ChatMain />} /> */}
-        
-      </Routes>
-    </BrowserRouter>
-   
-    <Toaster />
+            <Route
+              path="/chat"
+              element={
+                <PrivateRoute>
+                  <ChatMain />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/chat/:id"
+              element={
+                <PrivateRoute>
+                  <ChatMain />
+                </PrivateRoute>
+              }
+            />
+          </Routes>
+          <GlobalVideoCallNotification />
+        </BrowserRouter>
+      </VideoCallProvider>
+      <Toaster />
     </>
   )
+  // )
 }
 
 export default App

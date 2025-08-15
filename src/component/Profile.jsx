@@ -42,7 +42,8 @@ localStorage.removeItem("Cuseremail");
     localStorage.removeItem("currentlyChattingGroup");  
     localStorage.removeItem("currentlyChattingWith");  
     localStorage.removeItem("epr_suggested");  
- 
+ localStorage.removeItem("currentChatPartnerName");
+ localStorage.removeItem("nameOw");
     navigate('/login')
 
   }
