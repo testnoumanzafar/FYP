@@ -34,7 +34,7 @@ const VideoCallModal = ({
   if (isIncoming && !callAccepted && !callEnded) {
     return (
       <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
-        <div className="bg-white rounded-xl p-8 max-w-md w-full mx-4 text-center">
+        {/* <div className="bg-white rounded-xl p-8 max-w-md w-full mx-4 text-center">
           <div className="mb-6">
             <div className="w-20 h-20 bg-blue-500 rounded-full mx-auto mb-4 flex items-center justify-center">
               <FaVideo className="text-white text-2xl" />
@@ -59,7 +59,7 @@ const VideoCallModal = ({
               <FaVideo size={20} />
             </button>
           </div>
-        </div>
+        </div> */}
       </div>
     );
   }
@@ -72,7 +72,7 @@ const VideoCallModal = ({
         <div className="flex-1">
           <h3 className="text-lg font-semibold">Video Call - {roomName}</h3>
           <p className="text-sm text-gray-300 mt-1">
-            🎥 Direct Jitsi connection - should load automatically for both users
+             Direct Jitsi connection - should load automatically for both users
           </p>
         </div>
         <button

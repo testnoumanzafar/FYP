@@ -59,7 +59,7 @@ export const VideoCallProvider = ({ children }) => {
   const initiateCall = (receiverId, receiverName, isGroupCall = false, groupId = null) => {
     const roomName = `call-${uuidv4()}`;
     const callerId = localStorage.getItem('Cuserid');
-    const callerName = localStorage.getItem('Cusername');
+    const callerName = localStorage.getItem('nameOw');
 
     const callData = {
       roomName,
