@@ -242,7 +242,7 @@ console.log(filteredUsers,"filter");
 
             {/* List */}
             <ul className="space-y-4 p-4">
-              {users.map((user, idx) => (
+              {filteredUsers.map((user, idx) => (
                 <li
                   key={idx}
                   onClick={() => handleUserSelect(user)}
