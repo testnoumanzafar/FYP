@@ -179,12 +179,16 @@ console.log(filteredUsers,"filter");
             <input
               type="text"
               placeholder="Search"
+              value={search}
+  onChange={(e) => setSearch(e.target.value)}
               className="w-full px-3 py-1.5 mb-4 rounded border border-gray-300 bg-gray-100"
             />
           </div>
 
           <ul className="space-y-4 p-4">
-            {usersGroup.map((user, idx) => (
+            {usersGroup.filter((group) =>
+      group.name.toLowerCase().includes(search.toLowerCase())
+    ).map((user, idx) => (
               <li
                 key={idx}
                 onClick={() => handleGroupSelect(user)}
