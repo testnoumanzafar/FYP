@@ -8,8 +8,10 @@ import { FaDownload, FaMicrophone, FaPaperclip, FaPaperPlane, FaRegCopy, FaSmile
 import EmojiPicker from 'emoji-picker-react';
 import { useParams } from 'react-router-dom';
  import { format, isToday, isYesterday, formatDistanceToNow, parseISO } from 'date-fns';
- 
+// import { useVideoCall } from '../context/VideoCallContext';
+
 const ChatWindow = ({ userId, user }) => {
+  // const { setCurrentChatUserId } = useVideoCall();
    
 
   
@@ -70,20 +72,44 @@ const  receiverId= userId
   useEffect(() => {
     if (!senderId || !receiverId) return;
 
-    // Join socket room
+    // Join socket room with a consistent room name regardless of who initiated the chat
+    const roomUsers = [senderId, receiverId].sort();
+    const room = roomUsers.join('_');  // Match server's room format
     socket.emit('joinRoom', { senderId, receiverId });
 
     // Load previous messages
-    axios.get(`${URL}/api/messages?senderId=${senderId}&receiverId=${receiverId}`)
-      .then(res => setMessages(res.data));
+    const loadMessages = async () => {
+      try {
+        const res = await axios.get(`${URL}/api/messages?senderId=${senderId}&receiverId=${receiverId}`);
+        setMessages(res.data);
+      } catch (error) {
+        console.error('Error loading messages:', error);
+      }
+    };
+    loadMessages();
 
     // Set up socket listener for incoming messages
-    socket.on('receiveMessage', (message) => {
-      setMessages((prev) => [...prev, message]);
-    });
+    const handleNewMessage = (message) => {
+      // Only add message if it's between the current users
+      if ((message.senderId === senderId && message.receiverId === receiverId) ||
+          (message.senderId === receiverId && message.receiverId === senderId)) {
+        setMessages(prev => {
+          // Check if message already exists to prevent duplicates
+          const messageExists = prev.some(m => m._id === message._id);
+          if (!messageExists) {
+            return [...prev, message];
+          }
+          return prev;
+        });
+      }
+    };
+
+    socket.on('receiveMessage', handleNewMessage);
 
     return () => {
-      socket.off('receiveMessage');
+      const room = [senderId, receiverId].sort().join('_');
+      socket.emit('leaveRoom', { senderId, receiverId });
+      socket.off('receiveMessage', handleNewMessage);
     };
   }, [receiverId]);
 
@@ -115,9 +141,18 @@ if (voiceBlob) formData.append('voice', voiceBlob);
       },
     });
 
-    socket.emit('sendMessage', res.data);
-    // socket.emit('sendMessage', res.data);
-    // setMessages(prev => [...prev, res.data]); 
+    // Update local state immediately
+    setMessages(prev => [...prev, res.data]);
+    
+    // Emit the message with sender and receiver info
+    socket.emit('sendMessage', {
+      ...res.data,
+      senderId,
+      receiverId,
+      timestamp: new Date().toISOString()
+    });
+    
+    // Clear input states
     setInputText('');
     setFile(null);
     setVoiceBlob(null);
