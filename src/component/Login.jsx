@@ -8,9 +8,12 @@ import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
  
 import { URL } from '../constant/utils';
+import { useUsers } from '../context/UserContext';
 const Login = () => {
   // const dispatch = useDispatch()
+  // const { setUsers } = useUsers();
   const navigate = useNavigate();
+     const [loading, setLoading] = useState(false); 
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -26,6 +29,12 @@ const Login = () => {
 
   const handleSubmit =async (e) => {
     e.preventDefault();
+
+    if (!formData.email.endsWith("@danverium.site")) {
+    toast.error("Only danverium emails are allowed!");
+    return;
+  }
+setLoading(true); 
      localStorage.setItem("Cuseremail", formData.email);
    
     try {
@@ -40,11 +49,14 @@ const Login = () => {
       localStorage.setItem("nameOw", res.data.user.name);
   toast.success(res.data.message)  
   if(res.status ===200){
+      // setUsers(prev => [...prev, res.data.user]);
     navigate('/chat')
   } 
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.message)
+    }finally {
+      setLoading(false); 
     }
     
   };
@@ -98,9 +110,14 @@ const Login = () => {
          
             <button
               type="submit"
+              disabled={loading} 
               className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 mt-3 px-6 cursor-pointer rounded"
             >
-              Log in
+               {loading ? (
+                  <span className="animate-spin border-2 border-white border-t-transparent rounded-full w-5 h-5 mr-2"></span>
+                ) : null}
+                {loading ? "Login..." : "login"}
+              {/* Log in */}
             </button>
           </form>
 

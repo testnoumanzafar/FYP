@@ -12,6 +12,7 @@ import { URL } from '../constant/utils';
 const Signup = () => {
   const navigate = useNavigate()
   const [show, setShow]= useState([])
+    const [loading, setLoading] = useState(false); 
   console.log(show,"picc");
   
   const [formData, setFormData] = useState({
@@ -31,8 +32,20 @@ const Signup = () => {
     }));
   };
 
+
+
+
   const handleSubmit = async(e) => {
     e.preventDefault();
+
+if (!formData.email.endsWith("@danverium.site")) {
+    toast.error("Only danverium emails are allowed!");
+    return;
+  }
+setLoading(true); 
+
+
+
     const formDataToSend = new FormData();
 formDataToSend.append('name', formData.name);
 formDataToSend.append('email', formData.email);
@@ -58,7 +71,9 @@ try {
   console.log(error);
   const message =    error?.response?.data?.message || 'Something went wrong!';
   toast.error(message);
-}
+}finally {
+      setLoading(false); 
+    }
  
   };
 
@@ -135,9 +150,14 @@ try {
 
             <button
               type="submit"
-              className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-5 rounded"
+              disabled={loading} 
+              className="bg-blue-500 cursor-pointer hover:bg-blue-600 text-white font-semibold py-2 px-5 rounded"
             >
-              Register
+              {loading ? (
+                  <span className="animate-spin border-2 border-white border-t-transparent rounded-full w-5 h-5 mr-2"></span>
+                ) : null}
+                {loading ? "Registering..." : "Register"}
+              {/* Register */}
             </button>
             <Link to='/login'>
             <button

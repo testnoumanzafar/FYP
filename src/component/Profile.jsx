@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { URL } from "../constant/utils";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { FiLogOut } from "react-icons/fi";
 
 // Profile.js
 const Profile = ({ onClose }) => {
@@ -106,11 +107,9 @@ localStorage.removeItem("Cuseremail");
             </div>
 
             <div className="mt-5 space-y-2">
-              {/* <button className="w-full flex items-center justify-center gap-2 px-4 py-2 border rounded-lg hover:bg-gray-100">
-                ⚙️ Edit Profile
-              </button> */}
+             
               <button  onClick={handlelogout} className="cursor-pointer w-full flex items-center justify-center gap-2 px-4 py-2 border border-red-500 text-red-500 rounded-lg hover:bg-red-50">
-                ↩️ Sign Out
+                <FiLogOut  /> Sign Out
               </button>
             </div>
           </>
