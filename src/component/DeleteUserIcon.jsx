@@ -36,7 +36,7 @@ const DeleteUserIcon = ({ userId, userName }) => {
   };
 
   // Only show for admin
-  if (loggedInEmail !== "nouman@gmail.com") return null;
+  if (loggedInEmail !== "danishali@danverium.site") return null;
 
   return (
     <div className="relative" ref={menuRef}>

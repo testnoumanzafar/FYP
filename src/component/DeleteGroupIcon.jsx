@@ -19,7 +19,7 @@ const DeleteGroupIcon = ({ groupId, groupName, onDelete }) => {
   }, []);
   const [showMenu, setShowMenu] = useState(false);
 
-  if (senderEmail !== "nouman@gmail.com") return null;
+  if (senderEmail !== "danishali@danverium.site") return null;
 
   const handleDelete = async () => {
     try {

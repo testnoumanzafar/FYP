@@ -6,6 +6,7 @@ const socket = io("https://backend-fyp-1.onrender.com",{
   transports: ["websocket"], // optional but helps avoid polling issues
 }); // Your backend port
 export default socket;
+// k
 
 
 

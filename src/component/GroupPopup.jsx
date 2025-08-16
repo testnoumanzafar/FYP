@@ -26,8 +26,8 @@ const GroupPopup = ({ onClose }) => {
 const handleCreateGroup = async () => {
   const formData = new FormData();
   formData.append('name', groupName);
-  formData.append('adminId', localStorage.getItem('Cuserid')); // ✅ REQUIRED!
-  formData.append('memberIds', JSON.stringify(selectedUsers)); // ✅ must be 'memberIds'
+  formData.append('adminId', localStorage.getItem('Cuserid')); 
+  formData.append('memberIds', JSON.stringify(selectedUsers)); 
   if (groupImage) formData.append('groupImage', groupImage);
 
   try {
@@ -87,12 +87,12 @@ const handleCreateGroup = async () => {
         </div>
 
         <div className="mt-4 flex justify-end gap-3">
-          <button onClick={onClose} className="border px-4 py-1 rounded">
+          <button onClick={onClose} className="border px-4 py-1 cursor-pointer rounded">
             Cancel
           </button>
           <button
             onClick={handleCreateGroup}
-            className="bg-green-500 text-white px-4 py-1 rounded hover:bg-green-600"
+            className="bg-green-500 cursor-pointer text-white px-4 py-1 rounded hover:bg-green-600"
           >
             Create
           </button>

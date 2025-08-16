@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
  
 import axios from "axios";
 import socket, { mockGroups, URL } from "../constant/utils";
@@ -26,8 +26,9 @@ const Chatlist = ({ mode, onUserSelect, onGroupSelect }) => {
   //  for group chat 
 //  const senderId = localStorage.getItem("Cuserid");
   const senderEmail = localStorage.getItem("Cuseremail");  
-  const isAdmin = senderEmail === "nouman@gmail.com"; 
+  const isAdmin = senderEmail === "danishali@danverium.site"; 
 
+  
 
   // Fetch user's groups on component mount
   useEffect(() => {
@@ -159,7 +160,7 @@ console.log(filteredUsers,"filter");
             <div className="font-medium text-lg">Groups</div>
             {isAdmin && (
               <div
-                className="flex gap-2 justify-center items-center font-medium text-lg bg-green-400 px-2 py-1 rounded-lg cursor-pointer hover:bg-green-500"
+                className="flex gap-2  justify-center items-center font-medium text-lg bg-green-400 px-2 py-1 rounded-lg cursor-pointer hover:bg-green-500"
                 onClick={() => setShowPopup(true)}
               >
                 <FiPlus /> Create
